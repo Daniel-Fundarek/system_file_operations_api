@@ -24,22 +24,16 @@ public class DirectoryService implements IDirectoryService {
         return true;
     }
 
-    public boolean deleteDirectory(File directoryToBeDeleted) {
-
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
-            }
-        }
-        return directoryToBeDeleted.delete();
-    }
 
     @Override
     public boolean deleteDirectory(DirectoryRequest body) {
-
-        File dir = new File(body.getPath() + "/" + body.getName());
-        return deleteDirectory(dir);
+        var path = Paths.get(body.getPath() + "/" + body.getName());
+        try {
+            FileSystemUtils.deleteRecursively(path);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
 
     }
 }
