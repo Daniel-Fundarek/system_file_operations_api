@@ -13,7 +13,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
+
+import static org.apache.commons.io.comparator.SizeFileComparator.*;
 
 @Service
 public class DirectoryService implements IDirectoryService {
@@ -48,23 +49,15 @@ public class DirectoryService implements IDirectoryService {
     }
 
     @Override
-    public ArrayList<String> getContentOfDir(Request body) {
+    public File[] getContentOfDir(Request body) {
         Path path = Paths.get(body.getPath() + "/" + body.getName());
         doesDirectoryExist(path);
-        ArrayList<String> nameArray = new ArrayList<>();
         File f = new File(path.toUri());
         File[] files = f.listFiles();
         if (files != null) {
-            Arrays.sort(files, File::compareTo);
-            for (File file : files) {
-                nameArray.add(file.getName());
-            }
+            Arrays.sort(files, SIZE_SUMDIR_COMPARATOR);
         }
-
-        //Stream<File> stream = Arrays.stream(files);
-        //stream.forEach(str -> str.getName());
-        //return new ArrayList<String>(Arrays.asList());
-        return nameArray;
+        return files;
     }
 
 }
