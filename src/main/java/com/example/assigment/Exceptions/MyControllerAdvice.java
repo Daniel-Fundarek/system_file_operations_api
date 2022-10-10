@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 
@@ -16,7 +17,7 @@ public class MyControllerAdvice {
     @ExceptionHandler(value = {BadRequestException.class, FileAlreadyExistsException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleException1() {}
-    @ExceptionHandler(value = {NotFoundException.class})
+    @ExceptionHandler(value = {NotFoundException.class, FileNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleException() {}
 }

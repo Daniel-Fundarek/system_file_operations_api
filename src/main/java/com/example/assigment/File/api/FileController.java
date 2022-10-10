@@ -1,9 +1,7 @@
 package com.example.assigment.File.api;
 
 
-import com.example.assigment.Data.Request;
-import com.example.assigment.Data.Response;
-import com.example.assigment.Data.MoveFileRequest;
+import com.example.assigment.Data.*;
 import com.example.assigment.File.service.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +35,14 @@ public class FileController {
     public Response copyFile(@RequestBody MoveFileRequest body) throws IOException {
         return new Response(fileService.copyFile(body));
     }
-
-
+    @PostMapping("/content")
+    public FileContentResponse copyFile(@RequestBody Request body) throws IOException {
+        return new FileContentResponse(fileService.getFileContent(body));
+    }
+    @PostMapping("/pattern")
+    public FilePatternResponse copyFile(@RequestBody PatternRequest body) throws IOException {
+        return new FilePatternResponse(fileService.searchForPattern(body));
+    }
 
     @Autowired
     public void setFileService(IFileService service){

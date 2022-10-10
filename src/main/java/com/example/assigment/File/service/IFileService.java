@@ -1,11 +1,15 @@
 package com.example.assigment.File.service;
 
 
+import com.example.assigment.Data.FilePattern;
+import com.example.assigment.Data.PatternRequest;
 import com.example.assigment.Data.Request;
 import com.example.assigment.Data.MoveFileRequest;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public interface IFileService {
 
@@ -19,7 +23,12 @@ public interface IFileService {
 
     public boolean moveFile(MoveFileRequest body) throws IOException;
 
-    boolean doesFileExists(Path path);
+    public boolean doesFileExists(Path path);
 
-    boolean doesDirectoryExist(Path path);
+    public String getFileContent(Request body) throws IOException;
+
+
+    public ArrayList<FilePattern> searchForPattern(PatternRequest body) throws FileNotFoundException;
+
+
 }
