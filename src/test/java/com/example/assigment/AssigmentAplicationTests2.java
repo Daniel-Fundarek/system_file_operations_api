@@ -1,30 +1,15 @@
 package com.example.assigment;
 
 import com.example.assigment.Data.TestRequest;
-import com.example.assigment.Data.TestResponse;
-import com.example.assigment.Directory.api.DirectoryController;
-import io.restassured.response.ResponseBody;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import com.example.assigment.File.api.FileController;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import io.restassured.RestAssured;
-import io.restassured.http.Method;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
 
@@ -37,7 +22,37 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 //@SpringBootTest
 @RunWith(SpringRunner.class)
-@WebMvcTest(DirectoryController.class)
-
+@WebMvcTest(FileController.class)
 public class AssigmentAplicationTests2 {
+
+    @Autowired
+    private MockMvc mvc;
+
+    @MockBean
+    private FileController fileController;
+
+    @Test
+    public void createFileTest() throws Exception{
+        String path = new File("").getAbsolutePath();
+        path = path.replace("\\","/");
+        TestRequest request = new TestRequest("aTest.txt",path);
+        mvc.perform(post("/file").contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request)))
+                .andExpect(status()
+                        .isCreated());
+    }
+
+    @Test
+    public void deleteFileTest() throws Exception{
+        String path = new File("").getAbsolutePath();
+        path = path.replace("\\","/");
+        TestRequest request = new TestRequest("aTest.txt",path);
+        mvc.perform(post("/file").contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(request)));
+        mvc.perform(delete("/file").contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request)))
+                .andExpect(status()
+                        .isOk());
+    }
+
 }
