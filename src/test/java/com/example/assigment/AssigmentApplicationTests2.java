@@ -18,14 +18,13 @@ import java.io.File;
 import static groovy.json.JsonOutput.toJson;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 //@SpringBootTest
 @RunWith(SpringRunner.class)
 @WebMvcTest(FileController.class)
-public class AssigmentAplicationTests2 {
+public class AssigmentApplicationTests2 {
 
     @Autowired
     private MockMvc mvc;
