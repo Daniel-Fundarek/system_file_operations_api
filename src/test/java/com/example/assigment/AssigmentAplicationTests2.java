@@ -89,17 +89,32 @@ public class AssigmentAplicationTests2 {
                         .isCreated());
     }
     @Test
-    public void getFileContent() throws Exception{
+    public void getPattern() throws Exception{
         String path = new File("").getAbsolutePath();
         path = path.replace("\\","/");
         TestRequest request0 = new TestRequest("aTest.txt",path);
         mvc.perform(post("/file").contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(request0)));
         TestRequest request = new TestPatternRequest("aTest.txt",path,"d");
+        mvc.perform(post("/file/pattern").contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request)))
+                .andExpect(status()
+                        .isOk());
+    }
+
+    @Test
+    public void getContent() throws Exception{
+        String path = new File("").getAbsolutePath();
+        path = path.replace("\\","/");
+        TestRequest request0 = new TestRequest("aTest.txt",path);
+        mvc.perform(post("/file").contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(request0)));
+        TestRequest request = new TestRequest("aTest.txt",path);
         mvc.perform(post("/file/content").contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(request)))
                 .andExpect(status()
                         .isOk());
+
     }
 
 }
