@@ -1,6 +1,6 @@
 # system_file_operations_api
 
-This api allows you to use system file operations like create, delete, move and copy directory or file through rest api.
+This api allow you to use system file operations like create, delete, move and copy directory or file through rest api.
 
 post:
     
